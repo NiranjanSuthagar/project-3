@@ -113,5 +113,5 @@ export const fetchMockChannels = async () :Promise<Channel[]> =>{
 }
 
 
-export const mockVideos : Video[] = await fetchMockVideos();
-export const mockChannels : Channel[] =  await fetchMockChannels();
+export const mockVideos : Promise<Video[]> = fetchMockVideos();
+export const mockChannels : Promise<Channel[]> =  fetchMockChannels();

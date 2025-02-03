@@ -20,11 +20,20 @@ export default function VideoPage() {
   useEffect(() => {
     if (id) {
       fetchComments();
-      const video = mockVideos.find((v) => v.id === id);
-      setVideo(video);
-      setLike(video?.likes);
-      setRelatedVideos(mockVideos.filter((v) => v.id !== id).slice(0, 5));
-    }
+      mockVideos.then(result => {
+        const video = result.find((v) => v.id === id);
+        setVideo(video);
+        setLike(video?.likes);
+      }).catch(err => {
+        console.log(err);
+      });
+      mockVideos.then(result => {
+        const video = result.filter((v) => v.id !== id).slice(0, 5);
+        setRelatedVideos(video);
+      }).catch(err => {
+        console.log(err);
+      })
+      }
   }, [id]);
 
   const fetchComments = async () => {
