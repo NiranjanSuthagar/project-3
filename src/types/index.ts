@@ -17,3 +17,9 @@ export interface Channel {
   subscribers: number;
   videos: Video[];
 }
+
+export interface Comment {
+  id: string;
+  comment_text: string;
+  published_at: Date;
+}

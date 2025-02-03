@@ -90,7 +90,7 @@ export const fetchMockChannels = async () :Promise<Channel[]> =>{
                 // console.log(entry)
                 const videos : Video[] = await Promise.all(
                     (entry.videos || []).map(async (video : any)=>{
-
+                        
                     })
                 )
                 
