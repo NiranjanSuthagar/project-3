@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { mockChannels, mockVideos } from '../data/mockData';
 import VideoCard from '../components/VideoCard';
+import { Channel, Video } from '../types';
 
 export default function ChannelPage() {
   const { id } = useParams();
-  const channel = mockChannels.find(c => c.id === id);
-  const channelVideos = mockVideos.filter(v => v.channel.id === id);
+
+  const [channel, setChannel] = useState<Channel>();
+  const [channelVideos, setChannelVideos] = useState<Video[]>();
+
+  useEffect(() => {
+    mockChannels.then(result => {
+      const output = result.find(c => c.id === id);
+      setChannel(output);
+    }).catch(err => {
+      console.log(err);
+    });
+    mockVideos.then(result => {
+      const output = result.filter(v => v.channel.id === id);
+      setChannelVideos(output);
+    }).catch(err => {
+      console.log(err);
+    })
+  }, []);
   
   if (!channel) return <div>Channel not found</div>;
 
@@ -33,7 +50,7 @@ export default function ChannelPage() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {channelVideos.map((video, index) => (
+          {channelVideos?.map((video, index) => (
             <VideoCard key={video.id} video={video} delay={index * 100} />
           ))}
         </div>
